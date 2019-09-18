@@ -136,9 +136,9 @@
 				//geometry = new THREE.CubeGeometry( 0.5, 0.5, 0.5 );
 				//load obj
 			  	geometry = new THREE.ObjectLoader();
-				geometry.load( "teapot-claraio.json", function ( obj ) {
-					obj.position.set(5, 5, 5);
-				 	//scene.add( obj );} );
+				geometry.load( 'teapot-claraio.json', function ( obj ) {
+					obj.position.set(5, 5, 5)});
+				 	//scene.add( obj );} 
 					
 				// Create a new material for every mesh so we can color them separately
 				material	= new THREE.MeshLambertMaterial({color: Math.random() * 0xffffff, side: THREE.DoubleSide});
