@@ -109,6 +109,7 @@
                 scene.add( mesh );
 
 
+
 			/* Lights */
 
 			// Add lights to the scene
@@ -131,40 +132,61 @@
 			var numCubes = 5;
 			var cubes = [];
 
-			for (let i = 0; i < numCubes; i++) {
-				// Create a cube gemetry
-				geometry = new THREE.CubeGeometry( 0.5, 0.5, 0.5 );
-					
-				// Create a new material for every mesh so we can color them separately
-				material	= new THREE.MeshLambertMaterial({color: Math.random() * 0xffffff, side: THREE.DoubleSide});
-				// material.flatShading = true;
-				
-				pointX = Math.sin(2 * Math.PI * (i / numCubes));
-				pointZ = Math.cos(2 * Math.PI * (i / numCubes));
+            for (let i = 0; i < numCubes; i++) {
+            	// Create a cube gemetry
+            	geometry = new THREE.CubeGeometry( 0.5, 0.5, 0.5 );
+                    
+            	// Create a new material for every mesh so we can color them separately
+            	//material	= new THREE.MeshLambertMaterial({color: Math.random() * 0xffffff, side: THREE.DoubleSide});
+            	// material.flatShading = true;
+                var texture = new THREE.TextureLoader().load( 'https://live.staticflickr.com/65535/48751938728_0d33174e49_k.jpg' );
+				material = new THREE.MeshBasicMaterial( { map: texture } );
+                
+            	pointX = Math.sin(2 * Math.PI * (i / numCubes));
+            	pointZ = Math.cos(2 * Math.PI * (i / numCubes));
 
-				mesh	= new THREE.Mesh( geometry, material );
+            	mesh	= new THREE.Mesh( geometry, material );
 
-				mesh.position.set(pointX, 0.5, pointZ);
-				mesh.rotation.set(0.5, 0.5, 0.5);
-				mesh.n = Math.random();
+            	mesh.position.set(pointX, 0.5, pointZ);
+            	mesh.rotation.set(0.5, 0.5, 0.5);
+            	mesh.n = Math.random();
 
-				// Add mesh to the scene
-				scene.add(mesh);
-				cubes.push(mesh);
-			}
+            	// Add mesh to the scene
+            	scene.add(mesh);
+            	cubes.push(mesh);
+            }
 
-			//load obj
-			var objectLoader = new THREE.ObjectLoader();
-				objectLoader.load( "teapot-claraio.json", function ( obj ) {
-				 	scene.add( obj );
-				} );
-			
+            var loader = new THREE.FontLoader();
+
+            loader.load( "gotham.json", function ( font ) {
+
+            var geometry = new THREE.TextGeometry( 'Hello three.js!', {
+                font: font,
+                size: 80,
+                height: 5,
+                curveSegments: 12,
+                bevelEnabled: true,
+                bevelThickness: 10,
+                bevelSize: 8,
+                bevelOffset: 0,
+                bevelSegments: 5
+              }  );
+            var texture = new THREE.TextureLoader().load( 'https://live.staticflickr.com/65535/48751938728_0d33174e49_k.jpg' );
+            material = new THREE.MeshBasicMaterial( { map: texture } );
+
+            // Combine the material and the geometry into a mesh
+            mesh = new THREE.Mesh( geometry, material );
+            mesh._skybox = true;
+
+            // Add the mesh to the scene
+            scene.add( mesh );
+        } );
 
 			// geometry = new THREE.CubeGeometry( 0.5, 0.5, 0.5 );
 			// material = new THREE.MeshLambertMaterial({color: Math.random() * 0xffffff});
 			// mesh = new THREE.Mesh(geometry, material);
 			// mesh.position.set(1, 0.5, 1);
-			// scene.add(mesh);
+			// scene.add(geometry);
               
             }
             
@@ -177,7 +199,7 @@
 			function render() {
                 // If there's no interaction update camera rotation
                 if ( isUserInteracting === false )
-                    lon += 0.1;
+                    lon += 0.05;
 
                 // Calculate new position from the new longitude
 				lat = Math.max( - 85, Math.min( 85, lat ) );
