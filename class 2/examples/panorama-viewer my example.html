@@ -127,7 +127,7 @@
 
 			/* Geometry */ 
 			
-			var geometry, material, mesh, randomPoint;
+			var geometry, material, mesh, randomPoint, obj;
 			var numCubes = 5;
 			var cubes = [];
 
@@ -154,7 +154,7 @@
 			}
 
 			//load obj
-			var obj = new THREE.ObjectLoader();
+			obj = new THREE.ObjectLoader();
 			obj.load( 'star.obj' );
 			obj.position.set(5,5,5);
 			scene.add(obj);
