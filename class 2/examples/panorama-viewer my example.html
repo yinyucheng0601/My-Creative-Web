@@ -154,11 +154,15 @@
 			}
 
 			//load obj
-			obj = new THREE.ObjectLoader();
-			obj.load( 'star.obj' );
-			obj.position.set(5,5,5);
-			scene.add(obj);
-
+			//obj = new THREE.ObjectLoader();
+			//obj.load( 'star.obj' );
+			//obj.position.set(5,5,5);
+			//scene.add(obj);
+				
+			var objectLoader = new THREE.ObjectLoader();
+				objectLoader.load( "models/json/teapot-claraio.json", function ( obj ) {
+				 	scene.add( obj );
+				
 			// geometry = new THREE.CubeGeometry( 0.5, 0.5, 0.5 );
 			// material = new THREE.MeshLambertMaterial({color: Math.random() * 0xffffff});
 			// mesh = new THREE.Mesh(geometry, material);
