@@ -57,19 +57,19 @@
 				scene.add(camera);
                 
                 // Initialize new ray input
-                rayInput = new RayInput.default(camera, renderer.domElement);
-				rayInput.setSize(renderer.getSize());
-				// Register a callback when an object is selected.
-				rayInput.on('rayover', (mesh) => {
-					// Called when an object was selected.
-					hit = mesh
-				});
+//                 rayInput = new RayInput.default(camera, renderer.domElement);
+// 				rayInput.setSize(renderer.getSize());
+// 				// Register a callback when an object is selected.
+// 				rayInput.on('rayover', (mesh) => {
+// 					// Called when an object was selected.
+// 					hit = mesh
+// 				});
 			
-				// Register a callback when an object is selected.
-				rayInput.on('rayout', (mesh) => {
-					// Called when an object was selected.
-					hit = null
-				});
+// 				// Register a callback when an object is selected.
+// 				rayInput.on('rayout', (mesh) => {
+// 					// Called when an object was selected.
+// 					hit = null
+// 				});
 
    
 				var geometry = new THREE.BoxBufferGeometry( 0.5, 0.5, 0.5 );
