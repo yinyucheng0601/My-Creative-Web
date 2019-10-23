@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>three.js webgl - interactive - voxel painter</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+			
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/108/three.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/three-trackballcontrols-web@0.0.2/dist/three-trackballcontrols.js"></script>
+		<script src="https://unpkg.com/tone"></script>
+
+		<link type="text/css" rel="stylesheet" href="main.css">
+		<style>
+			body {
+				background-color: #ffffff;
+				color: #444;
+			}
+			a {
+				color: rgb(120, 80, 231);
+			}
+		</style>
+	</head>
+	<body>
+
+		<div id="info">
+			<a href="https://threejs.org" target="_blank" rel="noopener">three.js</a> - Vapor Garden - <br>
+			<strong>click</strong>: plant a flower, <strong>shift + click</strong>: remove 
+		</div>
+
+		<script type="module">
+			import * as THREE from '../build/three.module.js';
+			import { GLTFLoader } from '../build/GLTFLoader.js';
+
+		
+			
+			
+			var camera, cameraControls, scene, renderer;
+			var mouse, raycaster, isShiftDown = false;
+			var rollOverMesh, rollOverMaterial, mesh;
+			var cubeGeo, cubeMaterial, loader, plane;
+			var objects = [];
+			var flowers = ['../flower/flower.gltf' , '../flower/flower2.gltf' , '../flower/flower3.gltf' ,  '../flower/flower5.gltf', '../flower/flower6.gltf'];
+			// note.js
+			const notes = ['C4', 'D4', 'E4', 'F4', 'G4']
+
+			// Define two synths for drums and notes
+			const drumSynth = new Tone.MembraneSynth().toMaster();
+			const noteSynth = new Tone.Synth().toMaster();
+
+
+			init();
+			render();
+	
+
+			function init() {
+
+				scene = new THREE.Scene();
+				scene.background = new THREE.Color( 0x000000 );
+
+				camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 1, 10000 );
+				camera.position.set(0, 1000, 1000);
+				scene.add(camera);
+
+				// Hook up camera trackball controls
+				cameraControls	= new TrackballControls(camera);
+
+				
+				// roll-over flower helpers----- material?
+
+				
+				var rollOverGeo = new THREE.BoxBufferGeometry( 50, 50, 50 );
+				rollOverMaterial = new THREE.MeshBasicMaterial( { color: 0xc55cfa, opacity: 0, transparent: true } );
+				rollOverMesh = new THREE.Mesh( rollOverGeo, rollOverMaterial );
+				scene.add( rollOverMesh );
+
+
+				var flower = new GLTFLoader();
+				flower.load( '../flower/flower.gltf', function(x){
+				x.scene.scale.set( 50, 50, 50);
+				x.scene.position.set(0,0,0);
+				//x.material.opacity = 0.5;
+				rollOverMesh.add( x.scene );});
+
+
+				// grid
+				var gridHelper = new THREE.GridHelper( 1000, 20, 0xcabfe3 , 0xc55cfa);
+				scene.add( gridHelper );
+
+				
+
+	
+				
+				
+
+				raycaster = new THREE.Raycaster();
+				mouse = new THREE.Vector2();
+
+				var geometry = new THREE.PlaneBufferGeometry( 1000, 1000 );
+				geometry.rotateX( - Math.PI / 2 );
+
+				plane = new THREE.Mesh( geometry, new THREE.MeshBasicMaterial( { visible: false } ) );
+				scene.add( plane );
+
+				objects.push( plane );
+
+				// lights
+
+				var ambientLight = new THREE.AmbientLight( 0xffffff );
+				scene.add( ambientLight );
+
+				var directionalLight = new THREE.DirectionalLight( 0xffffff );
+				directionalLight.position.set( 1, 0.75, 0.5 ).normalize();
+				scene.add( directionalLight );
+
+				renderer = new THREE.WebGLRenderer( { antialias: true } );
+				renderer.setPixelRatio( window.devicePixelRatio );
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				document.body.appendChild( renderer.domElement );
+
+				document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+				document.addEventListener( 'mousedown', onDocumentMouseDown, false );
+				document.addEventListener( 'keydown', onDocumentKeyDown, false );
+				document.addEventListener( 'keyup', onDocumentKeyUp, false );
+
+				//
+
+				window.addEventListener( 'resize', onWindowResize, false );
+
+			}
+
+			function onWindowResize() {
+
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+
+				renderer.setSize( window.innerWidth, window.innerHeight );
+
+			}
+
+			function onDocumentMouseMove( event ) {
+
+				event.preventDefault();
+
+				mouse.set( ( event.clientX / window.innerWidth ) * 2 - 1, - ( event.clientY / window.innerHeight ) * 2 + 1 );
+
+				raycaster.setFromCamera( mouse, camera );
+
+				var intersects = raycaster.intersectObjects( objects );
+
+				if ( intersects.length > 0 ) {
+
+					var intersect = intersects[ 0 ];
+
+					rollOverMesh.position.copy( intersect.point ).add( intersect.face.normal );
+					rollOverMesh.position.divideScalar( 50 ).floor().multiplyScalar( 50 ).addScalar( 25 );
+
+				}
+
+				render();
+
+			}
+
+			function onDocumentMouseDown( event ) {
+
+				event.preventDefault();
+
+				mouse.set( ( event.clientX / window.innerWidth ) * 2 - 1, - ( event.clientY / window.innerHeight ) * 2 + 1 );
+
+				raycaster.setFromCamera( mouse, camera );
+
+				var intersects = raycaster.intersectObjects( objects );
+
+				if ( intersects.length > 0 ) {
+
+					var intersect = intersects[ 0 ];
+
+					// delete cube
+
+					if ( isShiftDown ) {
+						if ( intersect.object !== plane ) {
+
+							scene.remove( intersect.object );
+
+							objects.splice( objects.indexOf( intersect.object ), 1 );
+
+						}
+						else{ console.log("nope");}
+
+						// create cube
+
+					} else {
+					
+					noteSynth.triggerAttackRelease(notes[Math.floor(Math.random() * notes.length)], "8n")
+
+					loader = new GLTFLoader();
+					loader.load( flowers[Math.floor(Math.random() * flowers.length)], 
+						function(flower){
+						flower.scene.scale.set( 50, 50, 50 );
+						flower.scene.position.copy( intersect.point ).add( intersect.face.normal );
+						flower.scene.position.divideScalar( 50 ).floor().multiplyScalar( 50 ).addScalar(25);
+						scene.add( flower.scene );
+						objects.push( flower.scene );
+						console.log(objects);
+						}
+					);	
+					}
+					render();
+
+				}
+
+			}
+
+			function onDocumentKeyDown( event ) {
+
+				switch ( event.keyCode ) {
+
+					case 16: isShiftDown = true; break;
+
+				}
+
+			}
+
+			function onDocumentKeyUp( event ) {
+
+				switch ( event.keyCode ) {
+
+					case 16: isShiftDown = false; break;
+
+				}
+
+			}
+
+			function render() {
+				
+				// update camera controls
+				cameraControls.update();
+
+				renderer.render( scene, camera );
+
+			}
+
+		</script>
+
+	</body>
+</html>
