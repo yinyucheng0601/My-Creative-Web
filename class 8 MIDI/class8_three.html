@@ -66,13 +66,21 @@
 		/*
 			WebMIDI Setup
 		*/
-	
-	const player = new Tone.Player('music.mp3',
+
+		const player = new Tone.Player('music.mp3',
         (arg) => {
             console.log('Loaded!')
         }).toMaster()
-	player.autostart = true;
-	
+		player.autostart = true;
+
+		// const player = new Tone.Player({
+		// url: 'https://freesound.org/data/previews/24/24940_113878-lq.mp3',
+		// loop: true,
+		// // autostart: true,
+		// }).toMaster()
+
+		player.autostart = true;
+
 
         var groupX = 0
         var groupY = 0
