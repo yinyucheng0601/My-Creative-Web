@@ -64,7 +64,9 @@ function connectToPeerJS(id) {
 
     connection.on('data', function(data) {
       if(peerDataCallback) peerDataCallback(data, connection.peer)
-      display('Message from ' + connection.peer + ': ' + data + '.')
+      if (data && data.event === 'MESSAGE') {
+        display('Message from ' + connection.peer + ': ' + data.msg + '.')
+      }
     })
   });
 }
@@ -105,8 +107,9 @@ function callPeer(peerId, shouldCall, shouldConnect) {
   //   // listen for incoming data messages
     peer.dataChannel.on('data', function(message) {
       if(peerDataCallback) peerDataCallback(message, peerId)
-
-      display('Message from ' + peerId + ': ' + message + '.')
+      if (message && message.event === 'MESSAGE') {
+        display('Message from ' + peerId + ': ' + message.msg + '.')
+      }
     })
   })
 }
