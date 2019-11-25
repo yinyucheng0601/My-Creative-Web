@@ -17,7 +17,7 @@
     <br/>
     
     <input type="text" placeholder="Send message" id="message">
-    <button id="message" onclick="sendMessage(document.getElementById('message').value)">Send Message</button>
+    <button onclick="handleSendMessage(document.getElementById('message').value)">Send Message</button>
     
     <div id="videos"></div>
 
@@ -26,6 +26,9 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.0.4/peerjs.min.js"></script>
   <script src="./call-peer.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/p5@0.10.2/lib/p5.js"></script>
+    
+  <script src="sketchv1.js"></script>
   <script>
     // Create an <audio> element to play the audio stream
     // Create an <video> element to play the video stream
@@ -60,7 +63,9 @@
 
       // called on incoming data messages (every message)
       function onData(message, peerId) {
-        console.log("ON DATA", message, peerId)
+        if (message && message.event === 'DRAW') {
+          handleDraw(message)
+        }
       },
 
       // called on incoming media stream connections (on connection)

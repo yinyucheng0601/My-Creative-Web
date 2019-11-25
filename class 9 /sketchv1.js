@@ -55,15 +55,32 @@ function draw() {
 	}
 	capture.updatePixels();
   
-	//image(capture, 0, 0);  
+	//image(capture, 0, 0); 
+	
+	const msg = {
+		totalFoundPixels,
+		sumX,
+		sumY,
+		objectR,
+		objectB,
+		objectG
+	}
 
 	if (totalFoundPixels > 0) {
-		// average location of pixels
-		aveX = sumX / totalFoundPixels;
-		aveY = sumY / totalFoundPixels;
-		fill(objectR,objectB,objectG);
-		noStroke()
-		ellipse(width-2*aveX,2*aveY, 30, 30);		
+		this.handleDraw(msg)
+		sendMessage({ ...msg, event: 'DRAW' });
 	}
 }
 
+function handleDraw({ totalFoundPixels, sumX, sumY, objectR, objectB, objectG }) {
+	// average location of pixels
+	aveX = sumX / totalFoundPixels;
+	aveY = sumY / totalFoundPixels;
+	fill(objectR,objectB,objectG);
+	noStroke()
+	ellipse(width-2*aveX,2*aveY, 30, 30);	
+}
+
+function handleSendMessage(message) {
+	sendMessage({ event: 'MESSAGE', msg: message })
+}
