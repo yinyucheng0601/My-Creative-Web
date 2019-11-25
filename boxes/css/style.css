@@ -1,0 +1,43 @@
+html, body {
+  background-color: black;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+
+}
+
+
+canvas {
+   position:fixed;
+   
+   left: 0px;
+   top: 0px;
+
+   
+}
+
+.list {
+  z-index:1;
+  display: flex;
+  position:fixed;
+  
+  bottom:50px;
+  
+}
+
+.box {
+  width: 30px;
+  height: 150px;
+  background-color: white;
+  margin: 20px;
+  transition: 0.4s;
+  cursor: pointer;
+  
+}
+.box:hover {
+  width: 150px;
+  border-radius: 50%;
+
+}

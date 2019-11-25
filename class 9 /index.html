@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <title>Yucheng assignment 9</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="main.css">
+    <link rel="shortcut icon" href="main.css">
+ 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.0.4/peerjs.min.js"></script>
+    <script src="call-peer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/p5@0.10.2/lib/p5.js"></script>
+    
+    <script src="sketchv1.js"></script>
+    <style>
+      body {
+      margin: 30;
+      background-color: #f8f8f8;
+      font-family: Futura, Helvetica, sans-serif;
+      font-size: 14px;
+      line-height: 24px;
+    }
+        .wrapper {
+          position: absolute;
+          top: 40px;
+          left: 25px;
+          z-index: 1000;
+          color: rgb(70, 70, 70) !important;
+        }
+    
+        video {
+          width: 300px;
+          object-fit: contain;
+        }
+    
+        #videos {
+          position: absolute;
+          left: 500%;
+          height: 500%;
+        }
+      </style>  
+  </head>
+  <body>
+    <div class="wrapper">
+        <br/>
+        <input type="text" placeholder="Peer ID" id="id">
+        <Button id="call" onclick="callPeer(document.getElementById('id').value)">Call Peer</Button>
+        <br/>
+        <br/>
+        <div id="display"></div>
+        <div id="videos"></div>
+      </div>
+  </body>
+</html>
