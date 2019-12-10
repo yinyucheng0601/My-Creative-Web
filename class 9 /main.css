@@ -1,22 +1,37 @@
 
-@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
 
 html {
 	margin-top: 21px;
-	margin-left: 21px;
 }
 
 body {
-	
-	background-color: #f8f8f8;
-	font-family: Open Sans, sans-serif;
-	font-size: 12px;
-	line-height: 21px;
+	text-align: -webkit-center;
+	font-family: 'Montserrat', sans-serif;
+	font-size: 14px;
+	line-height: 30px;
 	color: #6673FF;
 }
 
+h1 {
+	margin-top:40px;
+	font-size: 40px;
+	color: #181818;
+	font-weight: bold;
+}
+.subheading{
+	margin: 12px;
+	font-size: 22px;
+	color: #181818;
+	line-height: 42px;
+}
+.actions {
+	margin:12px;
+}
+
 video {
-	width: 300px;
+	padding: 4px;
+	margin-top: 8px;
+	width: 200px;
 	object-fit: contain;
   }
 
@@ -25,34 +40,45 @@ input {
 	width: 150px;
 	height: 21px;
 	font: inherit;	
-	font-size: 13px;
+	font-size: 12px;
 	padding: 6px;
 	padding-left: 12px;
 	border: 1px solid #6673FF;
-  	border-radius: 4px;
+	border-radius: 4px;
+	display: inline-block;
 }
 
 button {
-	margin: 4px;
+	display:inline-block;
+	padding:0.35em 1.2em;
+	margin: 0;
 	width: 130px;
-	height: 35px;
-	padding: 6px;
-	font: inherit;	
-	font-size: 13px;
-	color: #6673FF;
+	height: 36px;
+	font-size: 12px;
 	border: 1px solid #6673FF;
   	border-radius: 4px;
-	background-color: white;
+	background-color:#6673FF;
+	color: white;
+	font-weight: bold;
 }
 
+
 button:hover {
-	background-color:#6673FF;
+	background-color:white;
+	color: #6673FF;
+}
+button.btn1 {
+	width:200px;
+}
+
+button.btn1:hover {
+	background-color: #6673FF;
 	color: white;
 }
 
-sketch {
+canvas {
   position: absolute;
-  top:0;
-  top: 0px;
+  top:0px;
   left: 0px;  
+  z-index: -1;
 }

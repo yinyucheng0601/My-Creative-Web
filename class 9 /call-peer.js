@@ -31,7 +31,7 @@ function initPeer(callback, dataCallback, mediaCallback, settings) {
 
 // Connect to PeerJS and get an ID
 function connectToPeerJS(id) {
-  display('Connecting to PeerJS...')
+  //display('Connecting to PeerJS...')
 
   // create new Peer.js connection
   if(id)
@@ -46,7 +46,7 @@ function connectToPeerJS(id) {
   // handle open connections
   me.on('open', function() {
 
-    display('Connected.')
+    display('Connected. Place a colorful object in the center of the web camera and click on Capture Color button. ')
     display('ID: ' + me.id)
   })
 
@@ -147,7 +147,7 @@ function getLocalStream(settings, callback) {
     {video: settings.video, audio: settings.audio},
 
     function success(audioStream) {
-      display('Camera is open.')
+      //display('Camera is open.')
       myStream = audioStream;
       if (callback) callback(null, myStream)
     },
