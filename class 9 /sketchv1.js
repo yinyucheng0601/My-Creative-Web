@@ -6,27 +6,36 @@ var objectG = 170;
 var objectB = 70;
 var debug = true;
 var capture;
-
-// sound variables
+var center;
 
 
 function setup() {
 	createCanvas(windowWidth, windowHeight);
 	// set up video things
-    capture = createCapture(VIDEO);
-  //video = document.createElement('video')
-  //capture.size(height,width);
+	capture = createCapture(VIDEO);
 	capture.hide();
 	frameRate(60);
 }
 
 function draw() {
+	//capture.get(capture.width/2,capture.heught/2);
 
 	capture.loadPixels();
 
 	var totalFoundPixels = 0; //we are going to find the average location of change pixes so
 	var sumX = 0; //we will need the sum of all the x find, the sum of all the y find and the total finds
 	var sumY = 0;
+
+	// let x, y, d; // set these to the coordinates
+	// let off = ((2 * capture.width + 2) * 4)
+	// let components = [
+	// pixels[off],
+	// pixels[off + 1],
+	// pixels[off + 2],
+	// pixels[off + 3]
+	// ];
+	// print(components);
+	
 
 	//enter into the classic nested for statements of computer vision
 	for (var row = 0; row < capture.height; row++) {
@@ -67,7 +76,7 @@ function draw() {
 	}
 
 	if (totalFoundPixels > 0) {
-		this.handleDraw(msg)
+		handleDraw(msg)
 		sendMessage({ ...msg, event: 'DRAW' });
 	}
 }
@@ -76,7 +85,7 @@ function handleDraw({ totalFoundPixels, sumX, sumY, objectR, objectB, objectG })
 	// average location of pixels
 	aveX = sumX / totalFoundPixels;
 	aveY = sumY / totalFoundPixels;
-	fill(objectR,objectB,objectG);
+	fill(objectR,objectG,objectB);
 	noStroke()
 	ellipse(width-2*aveX,2*aveY, 30, 30);	
 }

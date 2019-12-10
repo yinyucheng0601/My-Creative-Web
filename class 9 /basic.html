@@ -11,6 +11,11 @@
 </head>
 <body>
   <div class="wrapper">
+    <input type="text" placeholder="Your ID" id="uid">
+    <button id="call" onclick="connect(document.getElementById('uid').value)">Start</button>
+    <br/>
+    <br/>
+
     <input type="text" placeholder="Peer ID" id="id">
     <button id="call" onclick="callPeer(document.getElementById('id').value)">Call Peer</button>
     <br/>
@@ -18,7 +23,10 @@
     
     <input type="text" placeholder="Send message" id="message">
     <button onclick="handleSendMessage(document.getElementById('message').value)">Send Message</button>
-    
+    <br/>
+    <br/>
+
+    <button id="timer" onclick="myFunction() ">Timer</button>
     <div id="videos"></div>
 
     <div id="display"></div>
@@ -30,6 +38,16 @@
     
   <script src="sketchv1.js"></script>
   <script>
+    function myFunction() {
+      setTimeout(function(){
+      center = capture.get(capture.width/2,capture.height/2);
+      objectR=center[0];
+      objectG=center[1];
+      objectB=center[2];
+      fill(objectR,objectG,objectB)
+      rect(50,50,50,50)
+      }, 0);
+    }
     // Create an <audio> element to play the audio stream
     // Create an <video> element to play the video stream
     function playStream(stream) {
@@ -53,7 +71,7 @@
         video.srcObject = stream
       } 
     }
-
+    function connect(id) {
     // initialize Peer.js real-time connection
     initPeer(
       // called on initial connection (on Peer.js initialization)
@@ -62,9 +80,12 @@
       },
 
       // called on incoming data messages (every message)
+      
+
       function onData(message, peerId) {
         if (message && message.event === 'DRAW') {
-          handleDraw(message)
+          handleDraw(message);
+          //console.log(message);
         }
       },
 
@@ -84,11 +105,12 @@
         // Play the stream
         playStream(stream)
       }, {
-        // id: 'YOUR_UNIQUE_ID',
+        id:id,
         video: true,
-        audio: true
+        audio: false
       }
     )
+    }
   </script>
 </body>
 </html>
