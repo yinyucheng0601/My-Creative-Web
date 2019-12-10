@@ -1,3 +1,4 @@
+
 // image variables
 var threshold = 20; //255 is white, 0 is black
 var aveX, aveY, video; //this is what we are trying to find
@@ -10,7 +11,8 @@ var center;
 
 
 function setup() {
-	createCanvas(windowWidth, windowHeight);
+	var canvas = createCanvas(windowWidth, windowHeight);
+	canvas.parent('sketch');
 	// set up video things
 	capture = createCapture(VIDEO);
 	capture.hide();

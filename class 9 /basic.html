@@ -2,40 +2,34 @@
 <html>
 <head>
   <title>WebRTC/PeerJS Audio Call</title>
-  <style>
-    video {
-      width: 300px;
-      object-fit: contain;
-    }
-  </style>  
+  <link rel="stylesheet" href="main.css"> 
 </head>
 <body>
   <div class="wrapper">
-    <input type="text" placeholder="Your ID" id="uid">
+    <input type="text" placeholder="Input your ID" id="uid">
     <button id="call" onclick="connect(document.getElementById('uid').value)">Start</button>
     <br/>
     <br/>
 
-    <input type="text" placeholder="Peer ID" id="id">
+    <input type="text" placeholder="Input peer ID" id="id">
     <button id="call" onclick="callPeer(document.getElementById('id').value)">Call Peer</button>
     <br/>
     <br/>
     
-    <input type="text" placeholder="Send message" id="message">
+    <input type="text" placeholder="Type message here" id="message">
     <button onclick="handleSendMessage(document.getElementById('message').value)">Send Message</button>
     <br/>
     <br/>
-
-    <button id="timer" onclick="myFunction() ">Timer</button>
+  
+    <button id="timer" onclick="myFunction() ">Capture color</button>
+    <div id="sketch"></div>
     <div id="videos"></div>
-
     <div id="display"></div>
+   
   </div>
-
   <script src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.0.4/peerjs.min.js"></script>
   <script src="./call-peer.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/p5@0.10.2/lib/p5.js"></script>
-    
+  <script src="https://cdn.jsdelivr.net/npm/p5@0.10.2/lib/p5.js"></script>  
   <script src="sketchv1.js"></script>
   <script>
     function myFunction() {
@@ -45,7 +39,7 @@
       objectG=center[1];
       objectB=center[2];
       fill(objectR,objectG,objectB)
-      rect(50,50,50,50)
+      ellipse(capture.width - 100,capture.height -100,50,50)
       }, 0);
     }
     // Create an <audio> element to play the audio stream

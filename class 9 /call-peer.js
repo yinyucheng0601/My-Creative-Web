@@ -142,18 +142,18 @@ function handleIncomingCall(incoming) {
 
 // Get access to the microphone
 function getLocalStream(settings, callback) {
-  display('Trying to access your microphone. Please click "Allow".')
+  display('Trying to access your web camera. Please click "Allow".')
   navigator.getUserMedia (
     {video: settings.video, audio: settings.audio},
 
     function success(audioStream) {
-      display('Microphone is open.')
+      display('Camera is open.')
       myStream = audioStream;
       if (callback) callback(null, myStream)
     },
 
     function error(err) {
-      display('Couldn\'t connect to microphone. Reload the page to try again.')
+      display('Couldn\'t connect to web camera. Reload the page to try again.')
       if (callback) callback(err)
     }
   )
