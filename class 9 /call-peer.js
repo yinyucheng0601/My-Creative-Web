@@ -46,8 +46,8 @@ function connectToPeerJS(id) {
   // handle open connections
   me.on('open', function() {
 
-    display('Connected. Place a colorful object in the center of the web camera and click on Capture Color button. ')
-    display('ID: ' + me.id)
+    //display('Connected. Place a colorful object in the center of the web camera and click on Capture Color button. ')
+    display('My ID: ' + me.id)
   })
 
   // handle connection errors

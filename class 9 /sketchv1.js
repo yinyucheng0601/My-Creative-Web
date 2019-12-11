@@ -2,12 +2,12 @@
 // image variables
 var threshold = 20; //255 is white, 0 is black
 var aveX, aveY, video; //this is what we are trying to find
-var objectR = 177;
-var objectG = 170;
-var objectB = 70;
+var objectR =255, objectG = 255, objectB = 255, randomcolor;
 var debug = true;
 var capture;
 var center;
+
+
 
 
 function setup() {
@@ -17,6 +17,7 @@ function setup() {
 	capture = createCapture(VIDEO);
 	capture.hide();
 	frameRate(60);
+	randomcolor = '#50'+(Math.random()*0xFFFFFF).toString(16);
 }
 
 function draw() {
@@ -67,6 +68,7 @@ function draw() {
 	capture.updatePixels();
   
 	//image(capture, 0, 0); 
+	console.log(objectR,objectG,objectB);
 	
 	const msg = {
 		totalFoundPixels,
@@ -87,9 +89,11 @@ function handleDraw({ totalFoundPixels, sumX, sumY, objectR, objectB, objectG })
 	// average location of pixels
 	aveX = sumX / totalFoundPixels;
 	aveY = sumY / totalFoundPixels;
-	fill(objectR,objectG,objectB);
+	fill(objectR,objectG,objectB, 50);
+	
 	noStroke()
-	ellipse(width-2*aveX,2*aveY, 30, 30);	
+	var r = Math.random()*50;
+	ellipse(width-2*aveX,2*aveY, r, r);	
 }
 
 function handleSendMessage(message) {

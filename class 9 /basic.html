@@ -3,22 +3,24 @@
 <head>
   <title>Creative Web Final Project by Yucheng</title>
   <link rel="stylesheet" href="main.css"> 
- <link href="https://fonts.googleapis.com/css?family=Montserrat|Open+Sans:400,700,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:500,700,900&display=swap" rel="stylesheet">
 </head>
 <body>
  
     <h1><b>Draw Together With Webcam</b></h1>
     <div class="subheading"> Share the web link with friends. Call their ID and Draw Together! </div>
 
-    <div style="display: flex; width: 60%; margin-bottom: 8px; justify-content: space-evenly;">
-      <div><img src="bright.png" style="width: 100%; height: auto; max-width: 175px;"></div>
-      <div style="text-align: -webkit-left;margin-top: 15px"><span><b> 1. Input your name as ID to Start<br/>2. Find anything with a bright color.<br/>3. Hold it to Webcam and click on Capture Color.</b></span></div>
+    <div style="display: flex; width: 100%; margin-bottom: 8px; justify-content: center;text-align: left">
+      <div><img src="bright.png" style="width: 100%; height: auto; max-width: 175px; z-index: -2;"></div>
+      <div style="text-align: -webkit-left;margin-left:12px; margin-top: 21px"><span> 1. Find anything with a bright color.<br/>2. Hold it close to Webcam and click Capture Color.<br/>3. Slowly move around<br/></span></div>
     </div>
    
+      
+    <button class="btn1" id="timer" onclick="myFunction() ">Capture Color</button>
 
     <div class="actions">
         <input type="text" placeholder="Input your ID" id="uid">
-        <button id="call" onclick="connect(document.getElementById('uid').value)">Start</button>
+        <button id="call" onclick="connect(document.getElementById('uid').value)">Create</button>
         <br/>
     </div>
 
@@ -34,8 +36,7 @@
       <br/>
       <br/>
     </div>
-  
-    <button class="btn1" id="timer" onclick="myFunction() ">Capture Color</button>
+
     <div id="sketch"></div>
     <div id="videos"></div>
     <div id="display"></div>
@@ -46,19 +47,21 @@
   <script src="https://cdn.jsdelivr.net/npm/p5@0.10.2/lib/p5.js"></script>  
   <script src="sketchv1.js"></script>
   <script>
+
+
     function myFunction() {
-      setTimeout(function(){
+      //setTimeout(function(){
       center = capture.get(capture.width/2,capture.height/2);
       objectR=center[0];
       objectG=center[1];
       objectB=center[2];
+
+      //document.getElementById("timer").style.backgroundColor = 'rgb(' + objectR + ',' + objectG + ',' + objectB + ')';;
       fill(objectR,objectG,objectB)
       noStroke();
-      ellipse(capture.width - 100,capture.height -100,50,50)
-
-      }, 0);
+      ellipse(20,20,50,50)
     }
-    // Create an <audio> element to play the audio stream
+    
     // Create an <video> element to play the video stream
     function playStream(stream) {
       // Handle incoming audio

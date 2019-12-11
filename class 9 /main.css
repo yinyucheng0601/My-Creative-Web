@@ -5,7 +5,8 @@ html {
 }
 
 body {
-	text-align: -webkit-center;
+	
+	text-align: center;
 	font-family: 'Montserrat', sans-serif;
 	font-size: 14px;
 	line-height: 30px;
@@ -66,9 +67,13 @@ button {
 button:hover {
 	background-color:white;
 	color: #6673FF;
+	
 }
 button.btn1 {
-	width:200px;
+	width:304px;
+	border: 0px;
+	margin-bottom:40px;
+	margin-top:20px;
 }
 
 button.btn1:hover {
