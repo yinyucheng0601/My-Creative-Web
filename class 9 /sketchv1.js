@@ -4,20 +4,47 @@ var threshold = 20; //255 is white, 0 is black
 var aveX, aveY, video; //this is what we are trying to find
 var objectR =255, objectG = 255, objectB = 255, randomcolor;
 var debug = true;
-var capture;
+var capture, canvas;
 var center;
 
 
+// function getColor(){ 
+// 	return "hsl(" + 360 * Math.random() + ',' +
+// 			   (25 + 70 * Math.random()) + '%,' + 
+// 			   (85 + 10 * Math.random()) + '%)'
+//   }
+  
 
+  
+//   // Generate 20 colors
+//   for( var i = 20; i--; ){
+// 	var item = document.createElement('div')
+// 	item.style.cssText = `
+// 	  display:inline-block; 
+// 	  padding: 2em;
+// 	  margin:5px; 
+// 	  border-radius:50%;
+// 	  background: ${getColor()};
+// 	`
+// 	document.body.appendChild(item);
+//   }
+
+function screenshot(){
+
+	var dataUrl = canvas.toDataURL();
+	window.open(dataUrl, "toDataURL() image");
+}
 
 function setup() {
-	var canvas = createCanvas(windowWidth, windowHeight);
+	canvas = createCanvas(windowWidth, windowHeight);
 	canvas.parent('sketch');
 	// set up video things
 	capture = createCapture(VIDEO);
 	capture.hide();
 	frameRate(60);
-	randomcolor = '#50'+(Math.random()*0xFFFFFF).toString(16);
+	
+	//randomcolor = "hsl(" + 360 * Math.random() + ',' + (25 + 70 * Math.random()) + '%,' + (85 + 10 * Math.random()) + '%)';
+	
 }
 
 function draw() {
@@ -68,7 +95,7 @@ function draw() {
 	capture.updatePixels();
   
 	//image(capture, 0, 0); 
-	console.log(objectR,objectG,objectB);
+	//console.log(objectR,objectG,objectB);
 	
 	const msg = {
 		totalFoundPixels,
@@ -89,8 +116,7 @@ function handleDraw({ totalFoundPixels, sumX, sumY, objectR, objectB, objectG })
 	// average location of pixels
 	aveX = sumX / totalFoundPixels;
 	aveY = sumY / totalFoundPixels;
-	fill(objectR,objectG,objectB, 50);
-	
+	fill(objectR,objectG,objectB, 60);
 	noStroke()
 	var r = Math.random()*50;
 	ellipse(width-2*aveX,2*aveY, r, r);	
